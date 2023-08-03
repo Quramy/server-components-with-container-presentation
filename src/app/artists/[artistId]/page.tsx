@@ -1,18 +1,22 @@
 import { notFound } from 'next/navigation'
 import { prisma } from '@/prismaClient'
 
+import { Albums } from './Albums'
+
 type PresentationProps = {
   readonly artist: {
+    readonly id: string
     readonly name: string
     readonly biography: string
   }
 }
 
-export function ArtistPagePresentation({ artist: { name, biography } }: PresentationProps) {
+export function ArtistPagePresentation({ artist: { id, name, biography } }: PresentationProps) {
   return (
     <>
       <h1>{name}</h1>
       <blockquote>{biography}</blockquote>
+      <Albums artistId={id} />
     </>
   )
 }
