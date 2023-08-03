@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import { prisma } from '@/prismaClient'
 
@@ -21,7 +22,15 @@ export function ArtistPagePresentation({
     <>
       <h1>{name}</h1>
       <blockquote>{biography}</blockquote>
-      {albumsNode}
+      <Suspense
+        fallback={
+          <div role="alert" aria-busy="true">
+            Loading...
+          </div>
+        }
+      >
+        {albumsNode}
+      </Suspense>
     </>
   )
 }
