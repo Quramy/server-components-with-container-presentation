@@ -1,22 +1,27 @@
 import { notFound } from 'next/navigation'
 import { prisma } from '@/prismaClient'
 
-import { Albums } from './Albums'
+import { Albums, AlbumsPresentation } from './Albums'
 
 type PresentationProps = {
   readonly artist: {
-    readonly id: string
     readonly name: string
     readonly biography: string
   }
+  readonly albumsProps?: React.ComponentProps<typeof AlbumsPresentation>
+  readonly albumsNode?: React.ReactNode
 }
 
-export function ArtistPagePresentation({ artist: { id, name, biography } }: PresentationProps) {
+export function ArtistPagePresentation({
+  artist: { name, biography },
+  albumsProps,
+  albumsNode = albumsProps && <AlbumsPresentation {...albumsProps} />,
+}: PresentationProps) {
   return (
     <>
       <h1>{name}</h1>
       <blockquote>{biography}</blockquote>
-      <Albums artistId={id} />
+      {albumsNode}
     </>
   )
 }
@@ -34,7 +39,7 @@ export async function ArtistPage({ params: { artistId } }: Props) {
     return notFound()
   }
 
-  return <ArtistPagePresentation artist={artist} />
+  return <ArtistPagePresentation artist={artist} albumsNode={<Albums artistId={artist.id} />} />
 }
 
 export default ArtistPage

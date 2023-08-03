@@ -16,5 +16,8 @@ export const Default = {
       biography:
         "Coltrane was born in his parents' apartment at 200 Hamlet Avenue in Hamlet, North Carolina, on September 23, 1926.",
     },
+    albumsProps: {
+      albums: [{ id: '001', name: 'My Favorite Things', releaseYear: '1961' }],
+    },
   },
 } satisfies Story
