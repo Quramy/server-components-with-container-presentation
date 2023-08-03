@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { ArtistPage } from './page'
+import { ArtistPagePresentation as ArtistPage } from './page'
 
 export default {
   title: 'ArtistPage',
@@ -11,8 +11,10 @@ type Story = StoryObj<typeof ArtistPage>
 
 export const Default = {
   args: {
-    params: {
-      artistId: 'abcdefg',
+    artist: {
+      name: 'John Coltrane',
+      biography:
+        "Coltrane was born in his parents' apartment at 200 Hamlet Avenue in Hamlet, North Carolina, on September 23, 1926.",
     },
   },
 } satisfies Story

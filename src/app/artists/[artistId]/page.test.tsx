@@ -6,11 +6,11 @@
 import '@testing-library/jest-dom'
 import { screen, render } from '@testing-library/react'
 
-import { ArtistPage } from './page'
+import { ArtistPagePresentation } from './page'
 
-describe(ArtistPage, () => {
-  it("renders artist's name", async () => {
-    await render(<ArtistPage params={{ artistId: 'absdefg' }} />)
+describe(ArtistPagePresentation, () => {
+  it("renders artist's name", () => {
+    render(<ArtistPagePresentation artist={{ name: 'John Coltrane', biography: '' }} />)
     expect(screen.getByText('John Coltrane')).toBeInTheDocument()
   })
 })

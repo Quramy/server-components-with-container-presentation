@@ -1,6 +1,22 @@
 import { notFound } from 'next/navigation'
 import { prisma } from '@/prismaClient'
 
+type PresentationProps = {
+  readonly artist: {
+    readonly name: string
+    readonly biography: string
+  }
+}
+
+export function ArtistPagePresentation({ artist: { name, biography } }: PresentationProps) {
+  return (
+    <>
+      <h1>{name}</h1>
+      <blockquote>{biography}</blockquote>
+    </>
+  )
+}
+
 type Props = {
   readonly params: {
     readonly artistId: string
@@ -14,12 +30,7 @@ export async function ArtistPage({ params: { artistId } }: Props) {
     return notFound()
   }
 
-  return (
-    <>
-      <h1>{artist.name}</h1>
-      <blockquote>{artist.biography}</blockquote>
-    </>
-  )
+  return <ArtistPagePresentation artist={artist} />
 }
 
 export default ArtistPage
