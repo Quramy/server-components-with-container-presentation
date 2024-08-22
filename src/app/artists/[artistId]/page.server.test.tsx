@@ -7,8 +7,10 @@ import { notFound } from 'next/navigation'
 import { initialize } from '@quramy/prisma-fabbrica'
 
 import { ArtistFactory } from '@/factories'
+import { getProps } from '@/lib/testing/getProps'
 
 import { ArtistPage, ArtistPagePresentation } from './page'
+import { Albums } from './Albums'
 
 jest.mock('next/navigation', () => ({ notFound: jest.fn() }))
 jest.mock('@/prismaClient', () => ({ prisma: jestPrisma.client }))
@@ -25,14 +27,12 @@ describe(ArtistPage, () => {
   it('passes fetched data to presentational component for existing id', async () => {
     const created = await ArtistFactory.create()
 
-    const { type, props } = await ArtistPage({ params: { artistId: created.id } })
+    const el = await ArtistPage({ params: { artistId: created.id } })
 
-    expect(type).toBe(ArtistPagePresentation)
-    expect(props).toMatchObject({
-      artist: {
-        name: created.name,
-        biography: created.biography,
-      },
-    } satisfies React.ComponentProps<typeof ArtistPagePresentation>)
+    expect(getProps<typeof ArtistPagePresentation>(el, ArtistPagePresentation)!.artist).toMatchObject({
+      name: created.name,
+      biography: created.biography,
+    })
+    expect(getProps<typeof Albums>(el, Albums)!.artistId).toBe(created.id)
   })
 })
